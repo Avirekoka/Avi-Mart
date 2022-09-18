@@ -1,10 +1,12 @@
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import { useDispatch } from 'react-redux';
+import {Link} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { decreamentQuantity, increamentQuantity, removeFromCart } from '../Actions/CartAction';
 
 function Cart() {
+
+  useSelector(state => state.cart);
 
   const cartData = JSON.parse(localStorage.getItem("cart_data"));
 
@@ -16,28 +18,58 @@ function Cart() {
   return (
 
     <Container className="mt-4">
-      {
-        cartData.length !== 0 ? cartData.map((item) => {
-          return(
-            <Card key={item.id} className="mt-2">
-              <Card.Header>{item.title}</Card.Header>
-              <Card.Body>
-                <Card.Title>Special title treatment</Card.Title>
-                <Button onClick={() => dispatch(increamentQuantity(item.id))}>+</Button>
-                <Button onClick={() => dispatch(decreamentQuantity(item.id))}>-</Button>
-                <Card.Text>Total Quantity : {item.qty}</Card.Text>
-                <Card.Img variant="top" src={item.image} className="p-5" style={{height: "20rem", width: "15rem",cursor: "pointer" }} onClick={() => console.log("Clicked")}/>
-                <Card.Text>
-                  {item.description}
-                </Card.Text>
+      <table className="table table-bordered table-hover table-dark align-middle">
+        <thead className="text-center">
+          <tr>
+            <th scope="col">Item No.</th>
+            <th scope="col">Title</th>
+            <th scope="col">Image</th>
+            <th scope="col">Qty</th>
+            <th scope="col">Price</th>
+            <th scope="col">+/-</th>
+            
+          </tr>
+        </thead>
+        {
+          cartData && cartData.cartItem.length !== 0 ? cartData.cartItem.map((item) => {
+            return(
                 
-                <Button variant="primary" onClick={() => remove(item.id)}>Remove From Cart</Button>
-                </Card.Body>
-            </Card>
-          )
-        }) : "Cart Is empty"
-        
-      }
+                <tbody key={item.id} className="text-center">
+                  <tr>
+                    <th scope="row">{item.id}</th>
+                    <td>{item.title}</td>
+                    <td>
+                      <img src={item.image} width={"200px"} height={"260px"}/>
+                    </td>
+                    <td>{item.qty}</td>
+                    <td>{item.qty * item.price}</td>
+                    <td>
+                      <Button onClick={() => dispatch(increamentQuantity(item.id))} style={{marginRight: "1rem"}}>+</Button>
+                      <Button onClick={() => dispatch(decreamentQuantity(item.id))}>-</Button>
+                      
+                    </td>
+                    
+                  </tr>
+                </tbody>
+            )
+          }) : <>
+            <h3>Your cart is empty, fill it now</h3>
+            <Link to="/"><Button>Invoices</Button></Link>
+            
+          </>
+        }
+
+        <tfoot className='text-center font-weight-bold'>
+          <tr>
+            <td colSpan="3">Total</td>
+            <td>{cartData.totalQty}</td>
+            <td colSpan="2">{cartData.totalAmt}</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      
+     
     </Container>
     
   );

@@ -9,13 +9,12 @@ import { useState } from 'react';
 function AllProductList({ecommerceData}) {
   const [state,setState] = useState(false);  
 
-  const soldList = [1,3,5];
-
   const dispatch = useDispatch();
 
   setTimeout(() => {
     setState(true);
-  }, 60000);
+    
+  }, 5000);
 
   const addItemInCart = (itemId) => {
 
@@ -32,16 +31,15 @@ function AllProductList({ecommerceData}) {
                     return(
                         <Card style={{ width: '20rem',marginBottom: "1rem", padding: "5px"}} key={item.id} >
                             <Card.Title className='text-center'>{item.title}</Card.Title>
-                            <Card.Img variant="top" src={item.image} className="p-5" style={{height: "25rem",  cursor: "pointer" }} />
+                            <Card.Img variant="top" src={item.image} className="p-5" style={{height: "25rem"}} />
                             <Card.Body>                        
                                 <Card.Text>{item.rating.rate}</Card.Text>
                                 <Card.Text>{item.price}</Card.Text>
                             </Card.Body>
                             
                             {
-                                state && soldList.includes(item.id) ? <Button className='disabled'>Sold</Button> :<Button onClick={() => addItemInCart(item.id)} >Add To Cart</Button>  
+                                state && [1,3,5].includes(item.id) ? <Button className="disabled">Sold Out</Button> : <Button onClick={() => addItemInCart(item.id)} >Add To Cart</Button>
                             }
-                           
                             
        
                         </Card>

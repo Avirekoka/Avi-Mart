@@ -12,7 +12,7 @@ function Header() {
         <AppNavbar.Brand href="/">Home</AppNavbar.Brand>
         <Nav>
             <Nav.Link href="/cart">
-              Cart : {persistedData !== null ? persistedData.length : 0}
+              Checkout Cart 
             </Nav.Link>
         </Nav>
       </Container>
