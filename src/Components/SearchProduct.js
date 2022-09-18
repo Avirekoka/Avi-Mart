@@ -17,7 +17,7 @@ function SearchProduct() {
         <Form onSubmit={(e) => handleSearch(e)}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Search Product</Form.Label>
-            <Form.Control placeholder="Search Products" onChange={(e) => dispatch(searchResult(e.target.value))}/>
+            <Form.Control placeholder="Search Products" onChange={(e) => dispatch(searchResult(e.target.value))} autoComplete="off"/>
           </Form.Group>
         </Form>
     </div>

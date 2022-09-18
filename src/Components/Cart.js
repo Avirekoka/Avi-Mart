@@ -52,20 +52,22 @@ function Cart() {
                   </tr>
                 </tbody>
             )
-          }) : <>
-            <h3>Your cart is empty, fill it now</h3>
-            <Link to="/"><Button>Invoices</Button></Link>
+          }) : 
+            <h3 style={{color: "black"}}>Your cart is empty, fill it now <Link to="/"><Button>Check Products</Button></Link></h3>
             
-          </>
         }
 
-        <tfoot className='text-center font-weight-bold'>
-          <tr>
-            <td colSpan="3">Total</td>
-            <td>{cartData.totalQty}</td>
-            <td colSpan="2">{cartData.totalAmt}</td>
-          </tr>
-        </tfoot>
+        {
+
+          cartData && cartData.cartItem.length !== 0 && 
+          <tfoot className='text-center font-weight-bold'>
+            <tr>
+              <td colSpan="3">Total</td>
+              <td>{cartData.totalQty}</td>
+              <td colSpan="2">{cartData.totalAmt}</td>
+            </tr>
+          </tfoot>
+        }
       </table>
 
       
