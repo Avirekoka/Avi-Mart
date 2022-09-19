@@ -13,30 +13,30 @@ export const addToCart = (itemId) => async (dispatch) => {
     }
   };
 
-export const removeFromCart = (itemId) => async (dispatch) => {
+export const removeFromCart = (itemId) => {
   try {
     
-    dispatch({ type: REMOVE_FROM_CART, payload: itemId });
+    return({ type: REMOVE_FROM_CART, payload: itemId });
 
   } catch (error) {
     console.log(error)
   }
 };
 
-export const increamentQuantity = (itemId) => async (dispatch) => {
+export const increamentQuantity = (itemId) => {
   try {
     
-    dispatch({ type: INCREAMENT_QTY, payload: itemId });
+    return({ type: INCREAMENT_QTY, payload: itemId });  
 
   } catch (error) {
     console.log(error)
   }
 };
 
-export const decreamentQuantity = (itemId) => async (dispatch) => {
+export const decreamentQuantity = (itemId) => {
   try {
     
-    dispatch({ type: DECREAMENT_QTY, payload: itemId });
+    return({ type: DECREAMENT_QTY, payload: itemId });
 
   } catch (error) {
     console.log(error)
