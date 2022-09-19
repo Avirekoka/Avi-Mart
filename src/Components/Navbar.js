@@ -4,15 +4,13 @@ import AppNavbar from 'react-bootstrap/Navbar';
 
 function Header() {
 
-  const persistedData = JSON.parse(localStorage.getItem("cart_data"));
-
   return (
     <AppNavbar bg="light" expand="lg" variant="light">
       <Container>
         <AppNavbar.Brand href="/">Home</AppNavbar.Brand>
         <Nav>
             <Nav.Link href="/cart">
-              Checkout Cart 
+              Checkout Cart
             </Nav.Link>
         </Nav>
       </Container>

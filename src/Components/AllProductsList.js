@@ -1,42 +1,57 @@
+import React, {useEffect} from 'react';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
-import SearchProduct from './SearchProduct';
+import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../Actions/CartAction';
 import { useState } from 'react';
+import {checkPrime} from '../Utility/utility';
 
-function AllProductList({ecommerceData}) {
+function AllProductList() {
+
+  const ecommerceData = useSelector(state => state.ecommerce);
   const [state,setState] = useState(false);  
+  const [searchText, setSearchText] = useState("");
+  const [searchData, setSearchData] = useState(ecommerceData);
   const soldOutProducts = [1,3,5];
 
   const dispatch = useDispatch();
 
   setTimeout(() => {
     setState(true);
-    
   }, 60000);
 
-  const addItemInCart = (itemId) => {
+  useEffect(() => {
+    const filteredProducts = ecommerceData.filter(product => {
+      return product.title.toLowerCase().includes(searchText);
+    });
 
-    dispatch(addToCart(itemId))
-  };
+    setSearchData(filteredProducts);
 
-  const checkPrime = (id) => {
-    for(let i=2;i<= id/2;i++){
-      if(id%i === 0) return false;
-      
-    }
-    return true
-  }
-
+  }, [searchText,ecommerceData]);
 
   return (
     <Container className='mt-4'>
-        <SearchProduct />
+        <div className="row">
+          <div className='col-6'>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Search Product</Form.Label>
+                <Form.Control placeholder="Search Products" onChange={(e) => setSearchText(e.target.value)} autoComplete="off" style={{width: "20rem"}} value={searchText}/>
+              </Form.Group>
+            </Form>
+          </div>
+
+          <div className='col'>
+
+          </div>
+
+        </div>
+        <hr />
         <div style={{display: "grid", gridTemplateColumns: "1fr 1fr 1fr"}}>
             {
-                ecommerceData?.map(item => {
+                searchData?.map(item => {
                     return(
                         <Card style={{ width: '20rem',marginBottom: "1rem", padding: "5px"}} key={item.id} >
                             <Card.Title className='text-center'>{item.title}</Card.Title>
@@ -49,7 +64,7 @@ function AllProductList({ecommerceData}) {
                             </Card.Body>
                             
                             {
-                                state && soldOutProducts.includes(item.id) ? <Button className="disabled">Sold Out</Button> : <Button onClick={() => addItemInCart(item.id)} >Add To Cart</Button>
+                                state && soldOutProducts.includes(item.id) ? <Button className="disabled">Sold Out</Button> : <Button onClick={() => dispatch(addToCart(item.id))} >Add To Cart</Button>
                             }
                             
        

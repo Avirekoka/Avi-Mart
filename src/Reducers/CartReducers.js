@@ -1,94 +1,91 @@
 import { ADD_TO_CART, DECREAMENT_QTY, INCREAMENT_QTY, REMOVE_FROM_CART } from "../ActionTypes/CartActionType";
 
-const state = {
+const state1 = {
   cartItem: [],
   totalAmt: 0,
   totalQty: 0
 }
 
-export const cart = (initialCartState = [], actions) => {
+export const cart = (state = state1, actions) => {
     switch (actions.type) {
       case ADD_TO_CART:
 
         state.cartItem.push({...actions.payload});
-
         state.totalAmt +=actions.payload.price;
-
         state.totalQty = state.cartItem.length;
-        
+
         if(localStorage.getItem("cart_data")){
 
-          let localstorageData = JSON.parse(localStorage.getItem("cart_data"));
+          let localstorageForAddToCart = JSON.parse(localStorage.getItem("cart_data"));
 
-          localstorageData.totalQty += 1;
-          localstorageData.totalAmt += actions.payload.price;
+          localstorageForAddToCart.totalQty += 1;
+          localstorageForAddToCart.totalAmt += actions.payload.price;
           
-          localstorageData.cartItem.some(i => {
+          localstorageForAddToCart.cartItem.some(i => {
             if(i.id === actions.payload.id) i.qty += 1;
           });
 
-          const index = localstorageData.cartItem.findIndex(i => i.id === actions.payload.id);
+          const index = localstorageForAddToCart.cartItem.findIndex(item => item.id === actions.payload.id);
          
-          index === -1 && localstorageData.cartItem.push(actions.payload);
+          index === -1 && localstorageForAddToCart.cartItem.push(actions.payload);
           
-          localStorage.setItem("cart_data", JSON.stringify(localstorageData));
+          localStorage.setItem("cart_data", JSON.stringify(localstorageForAddToCart));
         }else{
           localStorage.setItem("cart_data", JSON.stringify(state));
         }
 
-        return [...initialCartState, actions.payload];
+        return state;
 
       case INCREAMENT_QTY:
-        let getLocalStorageDataForIncreament = JSON.parse(localStorage.getItem("cart_data"));
+        let getLocalStorageForIncreament = JSON.parse(localStorage.getItem("cart_data"));
 
-        getLocalStorageDataForIncreament.cartItem.some(i => {
+        getLocalStorageForIncreament.cartItem.some(i => {
           if(i.id === actions.payload) {
             i.qty += 1;
           }
         });
 
-        getLocalStorageDataForIncreament.totalQty = getLocalStorageDataForIncreament.cartItem.reduce((sum,{qty}) => sum + qty, 0);
-        getLocalStorageDataForIncreament.totalAmt += getLocalStorageDataForIncreament.cartItem.find(item => item.id === actions.payload).price;
+        getLocalStorageForIncreament.totalQty = getLocalStorageForIncreament.cartItem.reduce((prevSum,{qty}) => prevSum + qty, 0);
+        getLocalStorageForIncreament.totalAmt += getLocalStorageForIncreament.cartItem.find(item => item.id === actions.payload).price;
 
-        localStorage.setItem("cart_data", JSON.stringify(getLocalStorageDataForIncreament));
+        localStorage.setItem("cart_data", JSON.stringify(getLocalStorageForIncreament));
 
-        return getLocalStorageDataForIncreament;
+        return getLocalStorageForIncreament;
 
       case DECREAMENT_QTY:
-        let getLocalStorageDataForDecreament = JSON.parse(localStorage.getItem("cart_data"));
+        let getLocalStorageForDecreament = JSON.parse(localStorage.getItem("cart_data"));
 
-        getLocalStorageDataForDecreament.cartItem.some(i => {
+        getLocalStorageForDecreament.cartItem.some(i => {
           if(i.id === actions.payload) {
             
             i.qty > 0 && i.qty--
           }
         });
 
-        const filterdDecreamentData = getLocalStorageDataForDecreament.cartItem.filter(i => i.qty !== 0);
+        const filterdDecreamentData = getLocalStorageForDecreament.cartItem.filter(i => i.qty !== 0);
 
-        
-        getLocalStorageDataForDecreament.totalQty -= 1;
-        getLocalStorageDataForDecreament.totalAmt -= getLocalStorageDataForDecreament.cartItem.find(item => item.id === actions.payload).price;
-        getLocalStorageDataForDecreament.cartItem = filterdDecreamentData;
+        getLocalStorageForDecreament.totalQty -= 1;
+        getLocalStorageForDecreament.totalAmt -= getLocalStorageForDecreament.cartItem.find(item => item.id === actions.payload).price;
+        getLocalStorageForDecreament.cartItem = filterdDecreamentData;
 
-        localStorage.setItem("cart_data", JSON.stringify(getLocalStorageDataForDecreament));
+        localStorage.setItem("cart_data", JSON.stringify(getLocalStorageForDecreament));
 
-        return getLocalStorageDataForDecreament;
+        return getLocalStorageForDecreament;
 
       case REMOVE_FROM_CART:
 
-        let localstorageData = JSON.parse(localStorage.getItem("cart_data"));
-        const filteredCart = localstorageData.cartItem.filter(item => item.id !== actions.payload);
+        let localstorageForRemoveFromCart = JSON.parse(localStorage.getItem("cart_data"));
+        const filteredCart = localstorageForRemoveFromCart.cartItem.filter(item => item.id !== actions.payload);
 
         
-        localstorageData.totalQty -= localstorageData.cartItem.find(item => item.id === actions.payload).qty;
-        localstorageData.totalAmt -= localstorageData.cartItem.find(item => item.id === actions.payload).price * localstorageData.cartItem.find(item => item.id === actions.payload).qty;
-        localstorageData.cartItem = filteredCart;
+        localstorageForRemoveFromCart.totalQty -= localstorageForRemoveFromCart.cartItem.find(item => item.id === actions.payload).qty;
+        localstorageForRemoveFromCart.totalAmt -= localstorageForRemoveFromCart.cartItem.find(item => item.id === actions.payload).price * localstorageForRemoveFromCart.cartItem.find(item => item.id === actions.payload).qty;
+        localstorageForRemoveFromCart.cartItem = filteredCart;
 
-        localStorage.setItem("cart_data", JSON.stringify(localstorageData));
+        localStorage.setItem("cart_data", JSON.stringify(localstorageForRemoveFromCart));
         return filteredCart;
                
       default:
-        return initialCartState;
+        return state;
     }
   };

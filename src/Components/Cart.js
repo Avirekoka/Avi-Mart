@@ -10,6 +10,8 @@ function Cart() {
 
   const cartData = JSON.parse(localStorage.getItem("cart_data"));
 
+  const soldOutProducts = [1,3,5];
+
   const dispatch = useDispatch();
   const remove = (itemId) => {
     dispatch(removeFromCart(itemId));
@@ -45,7 +47,7 @@ function Cart() {
                     <td>{item.qty * item.price}</td>
                     <td>
                       {
-                        [1,3,5].includes(item.id) ? "" : <><Button onClick={() => dispatch(increamentQuantity(item.id))} style={{marginRight: "1rem"}}>+</Button>
+                        soldOutProducts.includes(item.id) ? "" : <><Button onClick={() => dispatch(increamentQuantity(item.id))} style={{marginRight: "1rem"}}>+</Button>
                         <Button onClick={() => dispatch(decreamentQuantity(item.id))}>-</Button></>
                       }
                     </td>

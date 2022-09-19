@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import { getEcommerceData } from './Actions/EcommerceAction';
 import AllProductList from './Components/AllProductsList';
 import Header from './Components/Navbar';
@@ -10,8 +10,7 @@ import Cart from './Components/Cart';
 function App() {
 
   const dispatch = useDispatch();
-  const ecommerceData = useSelector(state => state.ecommerce);
-    
+      
   useEffect(() => {
     dispatch(getEcommerceData())
   }, [dispatch]);
@@ -20,10 +19,8 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<AllProductList ecommerceData={ecommerceData}/>} />
+        <Route path="/" element={<AllProductList />} />
         <Route path="/cart" element={<Cart />} />
-        
-        
       </Routes>
       
     </div>

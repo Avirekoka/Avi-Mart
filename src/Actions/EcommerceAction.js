@@ -1,5 +1,5 @@
 import * as api from "../Services/EcommerceServices";
-import { GET_DATA, SEARCH } from "../ActionTypes/EcommerceActionTypes";
+import { GET_DATA } from "../ActionTypes/EcommerceActionTypes";
 import { toast } from "react-toastify";
 
 export const getEcommerceData = () => async (dispatch) => {
@@ -11,12 +11,5 @@ export const getEcommerceData = () => async (dispatch) => {
   }
 };
 
-export const searchResult = (searchValue) => async (dispatch) => {
-  try {
-    
-    dispatch({ type: SEARCH, payload: searchValue });
-  } catch (error) {
-    toast.error("Error while searching products");
-  }
-};
+
 
