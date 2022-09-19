@@ -27,7 +27,7 @@ function Cart() {
             <th scope="col">Qty</th>
             <th scope="col">Price</th>
             <th scope="col">+/-</th>
-            
+            <th scope="col">Remove</th>
           </tr>
         </thead>
         {
@@ -39,15 +39,22 @@ function Cart() {
                     <th scope="row">{item.id}</th>
                     <td>{item.title}</td>
                     <td>
-                      <img src={item.image} width={"200px"} height={"260px"}/>
+                      <img src={item.image} width={"200px"} height={"260px"} alt={item.title}/>
                     </td>
                     <td>{item.qty}</td>
                     <td>{item.qty * item.price}</td>
                     <td>
-                      <Button onClick={() => dispatch(increamentQuantity(item.id))} style={{marginRight: "1rem"}}>+</Button>
-                      <Button onClick={() => dispatch(decreamentQuantity(item.id))}>-</Button>
+                      {
+                        [1,3,5].includes(item.id) ? "" : <><Button onClick={() => dispatch(increamentQuantity(item.id))} style={{marginRight: "1rem"}}>+</Button>
+                        <Button onClick={() => dispatch(decreamentQuantity(item.id))}>-</Button></>
+                      }
+                    </td>
+                    <td>
+                      
+                      <Button onClick={() => remove(item.id)}>Remove</Button>
                       
                     </td>
+                    
                     
                   </tr>
                 </tbody>
@@ -64,7 +71,7 @@ function Cart() {
             <tr>
               <td colSpan="3">Total</td>
               <td>{cartData.totalQty}</td>
-              <td colSpan="2">{cartData.totalAmt}</td>
+              <td colSpan="3">{Math.ceil(cartData.totalAmt)}</td>
             </tr>
           </tfoot>
         }

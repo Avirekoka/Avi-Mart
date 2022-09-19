@@ -6,6 +6,7 @@ import Header from './Components/Navbar';
 import { Routes, Route } from "react-router-dom";
 import Cart from './Components/Cart';
 
+
 function App() {
 
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<AllProductList ecommerceData={ecommerceData}/>} />
         <Route path="/cart" element={<Cart />} />
+        
         
       </Routes>
       
