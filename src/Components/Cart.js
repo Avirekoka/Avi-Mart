@@ -42,7 +42,7 @@ function Cart() {
                 <tbody key={item.id} className="text-center">
                   <tr>
                     <th scope="row">{item.id}</th>
-                    <td>{item.title}</td>
+                    <td style={{width: "400px"}}>{item.title}</td>
                     <td>
                       <img src={item.image} width={"200px"} height={"260px"} alt={item.title}/>
                     </td>

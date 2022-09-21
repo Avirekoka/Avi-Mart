@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../Actions/CartAction';
 import { useState } from 'react';
 import {checkPrime} from '../Utility/utilityFunction';
-import { searchResult } from '../Actions/EcommerceAction';
+import { handlePageData, searchResult } from '../Actions/EcommerceAction';
 import Pagination from 'react-bootstrap/Pagination';
 import {soldOutProducts,itemsPerPage} from '../Utility/utilityFunction';
 
@@ -32,7 +32,7 @@ function AllProductList() {
   }, 60000);
 
   
-  for (let i = 1; i <= Math.ceil(ecommerceData.length/itemsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(ecommerceData.totalProducts/itemsPerPage); i++) {
     itemsList.push(
       <Pagination.Item key={i} active={i === activePage}>
         {i}
@@ -40,17 +40,20 @@ function AllProductList() {
     );
   }
   
-  const handlePaginationData = () => {
-    if(ecommerceData.length > 0){
-      setInitialState(ecommerceData.slice(lowerIndex,higherIndex));
+  const handlePaginationData = (low, high) => {
+    if(ecommerceData.totalProducts > 0){
+      setInitialState(ecommerceData.products.slice(low,high));
     }
   };
 
   const handlePageChange = (e) => {
     const currentPage = Number(e.target.textContent);
+    const lowInd = itemsPerPage * (currentPage - 1);
+    const upInd = itemsPerPage * currentPage;
+    
     setActivePage(currentPage);
-    setLowerIndex(itemsPerPage * (currentPage - 1));
-    setHigherIndex(itemsPerPage * currentPage);
+
+    dispatch(handlePageData(lowInd, upInd))
   };
 
   const handleSearch = (e) => {
@@ -61,8 +64,8 @@ function AllProductList() {
   }
   
   useEffect(() => {
-    handlePaginationData(0,5);
-  }, [ecommerceData, activePage]);
+    handlePaginationData(lowerIndex, higherIndex);
+  }, [ecommerceData, activePage, searchText]);
   
   return (
     <Container className='mt-4'>
@@ -82,9 +85,9 @@ function AllProductList() {
                             <Card.Title className='text-center'>{item.title}</Card.Title>
                             <Card.Img variant="top" src={item.image} className="p-5" style={{height: "25rem"}} />
                             <Card.Body>                        
-                                <Card.Text style={{background: "green",fontWeight: "bold",width: "3rem",textAlign: "center"}}>{item.rating.rate}<i className="bi bi-sticky"></i></Card.Text>
+                                <Card.Text style={{background: "green",fontWeight: "bold",textAlign: "center"}}>Rating - {item.rating.rate}<i className="bi bi-sticky"></i></Card.Text>
                                 {
-                                  checkPrime(item.id) === true ? <Card.Text><span style={{textDecoration: "line-through", color: "red"}}>{item.price}</span> <span style={{color: "green"}}>5% off </span>{(item.price - ((item.price*5)/100)).toFixed(2)}</Card.Text> : <Card.Text>{item.price.toFixed(2)}</Card.Text> 
+                                  checkPrime(item.id) === true ? <Card.Text>Buy at - <span style={{textDecoration: "line-through", color: "red"}}>{item.price} RS</span> <span style={{color: "green"}}>5% off </span>{(item.price - ((item.price*5)/100)).toFixed(2)} RS </Card.Text> : <Card.Text>Buy at - {item.price.toFixed(2)} RS</Card.Text> 
                                 }
                             </Card.Body>
                             
