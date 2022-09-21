@@ -13,7 +13,6 @@ export const getEcommerceData = () => async (dispatch) => {
 
 export const searchResult = (searchValue) => {
   try {
-
     return({ type: SEARCH, payload: searchValue });
   } catch (error) {
     toast.error("Error while searching products");

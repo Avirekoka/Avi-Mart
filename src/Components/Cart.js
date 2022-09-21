@@ -3,14 +3,13 @@ import Button from 'react-bootstrap/Button';
 import {Link} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { decreamentQuantity, increamentQuantity, removeFromCart } from '../Actions/CartAction';
+import {soldOutProducts} from '../Utility/utilityFunction'
 
 function Cart() {
 
   useSelector(state => state.cart);
 
   const cartData = JSON.parse(localStorage.getItem("cart_data"));
-
-  const soldOutProducts = [1,3,5];
 
   const dispatch = useDispatch();
   const remove = (itemId) => {

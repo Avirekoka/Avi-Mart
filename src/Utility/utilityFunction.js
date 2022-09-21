@@ -4,4 +4,7 @@ export const checkPrime = (id) => {
       
     }
     return true
-}
+};
+
+export const soldOutProducts = [1,3,5];
+export const itemsPerPage = 5;
