@@ -20,21 +20,25 @@ function Cart() {
   return (
 
     <Container className="mt-4">
-      <table className="table table-bordered table-hover table-dark align-middle">
-        <thead className="text-center">
-          <tr>
-            <th scope="col">Item No.</th>
-            <th scope="col">Title</th>
-            <th scope="col">Image</th>
-            <th scope="col">Qty</th>
-            <th scope="col">Price</th>
-            <th scope="col">+/-</th>
-            <th scope="col">Remove</th>
-          </tr>
-        </thead>
-        {
-          cartData && cartData.cartItem.length !== 0 ? cartData.cartItem.map((item) => {
-            return(
+
+      {
+        cartData && cartData.cartItem.length !== 0 ? 
+        <table className="table table-bordered table-hover table-dark align-middle">
+          <thead className="text-center">
+            <tr>
+              <th scope="col">Item No.</th>
+              <th scope="col">Title</th>
+              <th scope="col">Image</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Price</th>
+              <th scope="col">+/-</th>
+              <th scope="col">Remove</th>
+            </tr>
+          </thead>
+
+          {
+            cartData.cartItem.map((item) => {
+              return(
                 
                 <tbody key={item.id} className="text-center">
                   <tr>
@@ -60,15 +64,10 @@ function Cart() {
                     
                   </tr>
                 </tbody>
-            )
-          }) : 
-            <h3 style={{color: "black"}}>Your cart is empty, fill it now <Link to="/"><Button>Check Products</Button></Link></h3>
-            
-        }
+              )
+            })
+          }
 
-        {
-
-          cartData && cartData.cartItem.length !== 0 && 
           <tfoot className='text-center font-weight-bold'>
             <tr>
               <td colSpan="3">Total</td>
@@ -76,11 +75,10 @@ function Cart() {
               <td colSpan="3">{Math.ceil(cartData.totalAmt)}</td>
             </tr>
           </tfoot>
-        }
-      </table>
-
+        </table>
+        : <h3 style={{color: "black"}}>Your cart is empty, fill it now <Link to="/"><Button>Check Products</Button></Link></h3>
+      }
       
-     
     </Container>
     
   );
