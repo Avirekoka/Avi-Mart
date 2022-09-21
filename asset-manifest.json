@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/Avirekoka/Avi-mart/static/css/main.9bd7a35e.css",
-    "main.js": "/Avirekoka/Avi-mart/static/js/main.5fe12fa2.js",
-    "index.html": "/Avirekoka/Avi-mart/index.html",
-    "main.9bd7a35e.css.map": "/Avirekoka/Avi-mart/static/css/main.9bd7a35e.css.map",
-    "main.5fe12fa2.js.map": "/Avirekoka/Avi-mart/static/js/main.5fe12fa2.js.map"
+    "main.css": "/Avirekoka/Avi-Mart/store/static/css/main.9bd7a35e.css",
+    "main.js": "/Avirekoka/Avi-Mart/store/static/js/main.5fe12fa2.js",
+    "index.html": "/Avirekoka/Avi-Mart/store/index.html",
+    "main.9bd7a35e.css.map": "/Avirekoka/Avi-Mart/store/static/css/main.9bd7a35e.css.map",
+    "main.5fe12fa2.js.map": "/Avirekoka/Avi-Mart/store/static/js/main.5fe12fa2.js.map"
   },
   "entrypoints": [
     "static/css/main.9bd7a35e.css",
