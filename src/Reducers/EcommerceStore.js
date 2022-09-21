@@ -1,4 +1,5 @@
 import { GET_DATA, SEARCH, PAGE_DATA } from "../ActionTypes/EcommerceActionTypes";
+import {itemsPerPage} from '../Utility/utilityFunction'
 
 const state = {
   products: [],
@@ -23,8 +24,8 @@ const ecommerce = (initialProductsState = state, actions) => {
       case SEARCH:
 
           let localStorageAllProducts = JSON.parse(localStorage.getItem("all_products"));
-          let low = 5 * (actions.payload.currPage  - 1);
-          let high = 5 * (actions.payload.currPage);
+          let low = itemsPerPage * (actions.payload.currPage  - 1);
+          let high = itemsPerPage * (actions.payload.currPage);
           const getProductsBetweenRange = localStorageAllProducts.products.slice(low, high);
           const filteredProducts = getProductsBetweenRange.filter(product => {
             return product.title.toLowerCase().includes(actions.payload.txt);

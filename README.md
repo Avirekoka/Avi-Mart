@@ -12,3 +12,4 @@
 ### User can view the cart on clicking Checkout Cart in the header
 ### Inside cart, user can increase / decrease the items quantity.
 ### Items can be completely remove from the cart on clicking remove button
+### Implemented pagination and search functionality
