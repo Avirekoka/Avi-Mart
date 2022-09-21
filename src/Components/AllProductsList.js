@@ -52,6 +52,7 @@ function AllProductList() {
     const upInd = itemsPerPage * currentPage;
     
     setActivePage(currentPage);
+    setSearchText("");
 
     dispatch(handlePageData(lowInd, upInd))
   };

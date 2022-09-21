@@ -4,7 +4,7 @@ const state = {
   products: [],
   totalProducts : 0
 }
-const ecommerce = (initialProductsState = [], actions) => {
+const ecommerce = (initialProductsState = state, actions) => {
     switch (actions.type) {
       case GET_DATA:
       
@@ -12,20 +12,19 @@ const ecommerce = (initialProductsState = [], actions) => {
         state.totalProducts = actions.payload.length;
         localStorage.setItem("all_products", JSON.stringify(state));
 
-        return state;
+      return state;
       
       case PAGE_DATA:
         let localStorageAllProductsForPageData = JSON.parse(localStorage.getItem("all_products"));
         state.products = localStorageAllProductsForPageData.products.slice(actions.payload.lowerInd,actions.payload.higherInd);
         state.totalProducts = localStorageAllProductsForPageData.totalProducts;
-        return state;
+      return state;
       
-        case SEARCH:
+      case SEARCH:
 
           let localStorageAllProducts = JSON.parse(localStorage.getItem("all_products"));
           let low = 5 * (actions.payload.currPage  - 1);
           let high = 5 * (actions.payload.currPage);
-          console.log(actions.payload)
           const getProductsBetweenRange = localStorageAllProducts.products.slice(low, high);
           const filteredProducts = getProductsBetweenRange.filter(product => {
             return product.title.toLowerCase().includes(actions.payload.txt);
@@ -36,7 +35,7 @@ const ecommerce = (initialProductsState = [], actions) => {
         return state;
 
       default:
-        return initialProductsState;
+        return state.products;
     }
   };
 export default ecommerce;
