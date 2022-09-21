@@ -1,12 +1,12 @@
 import { ADD_TO_CART, DECREAMENT_QTY, INCREAMENT_QTY, REMOVE_FROM_CART } from "../ActionTypes/CartActionType";
 
-const state1 = {
+const initialProductsState = {
   cartItem: [],
   totalAmt: 0,
   totalQty: 0
 }
 
-export const cart = (state = state1, actions) => {
+export const cart = (state = initialProductsState, actions) => {
     switch (actions.type) {
       case ADD_TO_CART:
 
