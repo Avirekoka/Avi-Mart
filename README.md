@@ -1,5 +1,10 @@
 # Created store app using React
 
+## Installation
+
+### Clone the project -> https://github.com/Avirekoka/Avi-Mart.git
+### run command to install all the packages -> npm install 
+
 ## Description
 
 ### In this app, data is fetching from the https://fakestoreapi.com/products api which is displayed on the home page.
