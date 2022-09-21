@@ -10,6 +10,7 @@ export const cart = (state = initialProductsState, actions) => {
     switch (actions.type) {
       case ADD_TO_CART:
 
+        actions.payload.qty = 1;
         state.cartItem.push({...actions.payload});
         state.totalAmt +=actions.payload.price;
         state.totalQty = state.cartItem.length;

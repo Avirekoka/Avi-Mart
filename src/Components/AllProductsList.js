@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../Actions/CartAction';
 import { useState } from 'react';
 import {checkPrime} from '../Utility/utility';
+import { searchResult } from '../Actions/EcommerceAction';
 
 function AllProductList() {
 
   const ecommerceData = useSelector(state => state.ecommerce);
+
   const [state,setState] = useState(false);  
-  const [searchText, setSearchText] = useState("");
-  const [searchData, setSearchData] = useState(ecommerceData);
   const soldOutProducts = [1,3,5];
 
   const dispatch = useDispatch();
@@ -22,15 +22,6 @@ function AllProductList() {
     setState(true);
   }, 60000);
 
-  useEffect(() => {
-    const filteredProducts = ecommerceData.filter(product => {
-      return product.title.toLowerCase().includes(searchText);
-    });
-
-    setSearchData(filteredProducts);
-
-  }, [searchText,ecommerceData]);
-
   return (
     <Container className='mt-4'>
         <div className="row">
@@ -38,7 +29,7 @@ function AllProductList() {
             <Form>
               <Form.Group className="mb-3">
                 <Form.Label>Search Product</Form.Label>
-                <Form.Control placeholder="Search Products" onChange={(e) => setSearchText(e.target.value)} autoComplete="off" style={{width: "20rem"}} value={searchText}/>
+                <Form.Control placeholder="Search Products" onChange={(e) => dispatch(searchResult(e.target.value))} autoComplete="off" style={{width: "20rem"}} />
               </Form.Group>
             </Form>
           </div>
@@ -51,7 +42,7 @@ function AllProductList() {
         <hr />
         <div style={{display: "grid", gridTemplateColumns: "1fr 1fr 1fr"}}>
             {
-                searchData?.map(item => {
+                ecommerceData?.map(item => {
                     return(
                         <Card style={{ width: '20rem',marginBottom: "1rem", padding: "5px"}} key={item.id} >
                             <Card.Title className='text-center'>{item.title}</Card.Title>
